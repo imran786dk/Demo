@@ -5,19 +5,18 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.demo.entity.Car;
-import com.example.demo.repository.CarRepository;
+import com.example.demo.repository.car.CarRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class CarBL {
 	
 	@Autowired
 	CarRepository carRepository;
 
-	public List <Car> getAllCar()  {
+	public List <Car> findAllCars()  {
 		
 		Iterable<Car> cars = carRepository.findAll();
 		
@@ -31,4 +30,40 @@ public class CarBL {
 		return carList;
 		
 	}
+	
+	public Car findCarById(Long id)  {
+		
+		Optional <Car> car = carRepository.findById(id);
+		
+		if(car.isPresent()) {
+			
+			return car.get();
+		} else  {
+			
+			return null;
+		}
+				
+		
+	}
+	
+	public void saveCar(Car car)  {
+		
+		carRepository.save(car);
+						
+	}
+	
+	public void removeCarById(Long id)  {
+		
+		carRepository.deleteById(id);
+						
+	}
+	
+	public List <Car> findCarByBrand(String brand)  {	
+		
+		List <Car> carList = carRepository.findCarByBrand(brand);
+			
+		return carList;
+		
+	}
+	
 }

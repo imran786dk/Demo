@@ -8,7 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.example.demo.repository.CarRepository;
+import com.example.demo.repository.car.CarRepository;
+
 
 @SpringBootApplication
 public class DemoApplication {
