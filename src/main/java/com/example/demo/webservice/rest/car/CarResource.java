@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.webservice.rest.car;
 
 import java.util.List;
 
