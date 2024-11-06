@@ -10,7 +10,10 @@ import com.example.demo.entity.Car;
 import com.example.demo.repository.car.CarRepository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.PersistenceContext;
+
+@NamedQuery(name="findCarByYear", query="SELECT c FROM car c WHERE c.YEAR = :year")
 
 @Repository
 @Transactional
@@ -19,10 +22,6 @@ public abstract class CarRepositoryImpl implements CarRepository  {
 	
 	@PersistenceContext
 	protected EntityManager em;
-
-	public CarRepositoryImpl() {
-		// empty
-	}
 
 	@Transactional
 	public void create(Car car) {
@@ -44,12 +43,22 @@ public abstract class CarRepositoryImpl implements CarRepository  {
 	
 	@Override
 	public List<Car> findAll() {
-		return em.createQuery("select object(o) from car as o").getResultList();
+		return em.createQuery("select object(o) from car as o")
+				.getResultList();
 	}
 	
 	@Override
 	public List<Car> findCarByBrand(String brand) {
-		return em.createNativeQuery("select * from car c where c.BRAND =" + brand + "';")
+		return em.createNativeQuery("select * from car c where c.BRAND = :brand;", Car.class)
+				.setParameter("brand", brand)
+				.getResultList();
+
+	}
+	
+	@Override
+	public List<Car> findCarByYear(String year) {
+		return em.createNamedQuery("findCarByYear", Car.class)
+				.setParameter("year", year)
 				.getResultList();
 
 	}

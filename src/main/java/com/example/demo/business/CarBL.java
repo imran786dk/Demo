@@ -66,4 +66,12 @@ public class CarBL {
 		
 	}
 	
+	public List <Car> findCarByYear(String year)  {	
+		
+		List <Car> carList = carRepository.findCarByYear(year);
+			
+		return carList;
+		
+	}
+	
 }

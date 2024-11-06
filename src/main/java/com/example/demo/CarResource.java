@@ -47,6 +47,14 @@ public class CarResource {
 		return cars;
 	}
 	
+	@GetMapping("/searchByYear")
+	public List <Car> getCarByYear(@RequestParam("year") String year) {
+		
+		List <Car> cars = carBL.findCarByYear(year);
+		
+		return cars;
+	}
+	
 	@PostMapping("")
 	public ResponseEntity createCar(@RequestBody Car car) {
 				
