@@ -41,19 +41,6 @@ public abstract class CarRepositoryImpl implements CarRepository  {
 	public void remove(Car car) {
 		em.remove(em.merge(car));
 	}
-
-	@Override
-	public Car findFlush(Object id) {
-		em.flush();
-		Car entity = find(id);
-		em.refresh(entity);
-		return entity;
-	}
-
-	@Override
-	public Car find(Object id) {
-		return em.find(Car.class, id);
-	}
 	
 	@Override
 	public List<Car> findAll() {
