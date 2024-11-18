@@ -2,6 +2,8 @@ package com.example.demo.webservice.rest.car;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ import com.example.demo.entity.Car;
 @RequestMapping("/cars")
 public class CarResource {
 	
+	Logger log = LoggerFactory.getLogger(CarResource.class);
+	
 	@Autowired
 	CarBL carBL;
 	
@@ -27,6 +31,8 @@ public class CarResource {
 	public List <Car> getCars()  {
 		
 		List <Car> cars = carBL.findAllCars();
+		
+		log.info("{} car(s) returned", cars.size());
 		
 		return cars;
 	}
@@ -61,7 +67,8 @@ public class CarResource {
 		try {
 			carBL.saveCar(car);
 		} catch (Exception e) {
-
+			
+			log.error("{} Car cannot be saved", car.getId());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 
 		}
@@ -75,7 +82,8 @@ public class CarResource {
 		try {
 			carBL.removeCarById(carId);
 		} catch (Exception e) {
-
+			
+			log.error("{} Car cannot be deleted", carId);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 
 		}
